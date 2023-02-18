@@ -17,5 +17,5 @@ def test_fibonacci():
     assert fibonacci(4) == 3
     assert fibonacci(5) == 5
     assert fibonacci(6) == 8
-    assert fibonacci(7) == 12
+    assert fibonacci(7) == 13
 
