@@ -1,4 +1,5 @@
 
+from functools import lru_cache
 
 
 import pytest
@@ -33,5 +34,3 @@ def test_fibonacci_values_are_correct():
 def test_fibonacci_raises_error_if_argument_not_positive_integer():
     with pytest.raises(ValueError):
         fibonacci.fibonacci(-1)
-
-pytest
