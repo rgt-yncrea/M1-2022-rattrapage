@@ -1,0 +1,40 @@
+name: Test and Build on Tag
+
+on:
+  push:
+    tags:
+      - '*' # Déclenche le workflow lorsqu'un tag est detecter.
+
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.9' # Spécifie la version de Python à utiliser pour tester et construire le projet.
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+
+    - name: Run tests
+      run: |
+        python -m pytest # Lance les tests.
+
+    - name: Build
+      if: success() # Construit le projet seulement si tous les tests sont réussis.
+      run: |
+        python setup.py sdist bdist_wheel # Construit les archives .tar.gz et .whl.
+
+    - name: Upload artifact
+      if: success() # N'envoie l'artefact que si la construction a réussi.
+      uses: actions/upload-artifact@v2
+      with:
+        name: my-artifact
+        path: dist/ # Indique le chemin du dossier contenant les archives .tar.gz et .whl.
