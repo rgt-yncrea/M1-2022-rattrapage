@@ -34,7 +34,7 @@ jobs:
         pip install pytest
 
     - name: Run tests
-      run: pytest
+      run: python -m pytest
       env:
           CI: true
       continue-on-error: false
