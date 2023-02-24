@@ -1,18 +1,17 @@
-name: Build on tag
+name: Test Coverage
 
 on:
-  push:
-    tags:
-      - 'v*'
+  pull_request:
+    branches: [dev]
 
 jobs:
-  build:
+  test-coverage:
     runs-on: ubuntu-latest
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
       with:
-        ref: ${{ github.ref }}
+        ref: ${{ github.event.pull_request.head.sha }}
     - name: Set up Python 3.9
       uses: actions/setup-python@v2
       with:
@@ -21,16 +20,10 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install -r requirements.txt
-    - name: Run tests
+    - name: Run tests and coverage report
       run: |
-        pytest
-    - name: Build distribution packages
-      run: |
-        python setup.py sdist bdist_wheel
-      if: success()
-    - name: Publish distribution packages
-      uses: actions/upload-artifact@v2
+        pytest --cov=./
+    - name: Upload coverage report
+      uses: codecov/codecov-action@v1
       with:
-        name: dist-packages
-        path: dist/
-      if: success()
+        flags: unittests
