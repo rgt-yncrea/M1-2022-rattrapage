@@ -1,0 +1,28 @@
+name: Build
+on:
+  push:
+    tags:
+      - "build*.*.*"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+      - run: pip install --upgrade setuptools wheel
+      - run: python setup.py sdist bdist_wheel
+      - uses: actions/upload-artifact@v2
+        with:
+          name: dist
+          path: dist/*
+      - name: Deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          password: ${{ secrets.DEPLOY_PASSWORD }}
+          script: |
+            cd /home/myproject
+            pip install --upgrade dist/*.whl
