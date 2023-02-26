@@ -5,7 +5,7 @@ on:
   pull_request:
     branches: ["dev"]
 
-#Don't know which permission to use
+#Je ne sais pas quelles permissions mettre
 permissions:
   contents: read
 
