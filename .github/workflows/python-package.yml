@@ -16,7 +16,7 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8 # Spécifie la version de Python à utiliser pour la build
+          python-version: 3.10
 
       - name: Install Dependencies
         run: |
