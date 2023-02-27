@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "fibonacci_rattrapages"
+name = "fibonacci_rattrapages-BS"
 version = "0.0.1"
 authors = [
   { name="Your name", email="your.name@isen.yncrea.fr" },
